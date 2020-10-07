@@ -1,0 +1,71 @@
+{
+    "executionRoleArn": "'${DASHBOARD_ROLE_ARN}'",
+    "containerDefinitions": [
+        {
+            "portMappings": [
+                {
+                    "hostPort": 9002,
+                    "protocol": "tcp",
+                    "containerPort": 9002
+                }
+            ],
+            "cpu": 10,
+            "environment": [
+                {
+                    "name": "COUNTING_SERVICE_URL",
+                    "value": "http://localhost:9001"
+                }
+            ],
+            "memory": 300,
+            "image": "hashicorp/dashboard-service:0.0.4",
+            "name": "dashboard"
+        },
+        {
+            "portMappings": [
+                {
+                    "hostPort": 21000,
+                    "protocol": "tcp",
+                    "containerPort": 21000
+                }
+            ],
+            "cpu": 10,
+            "environment": [
+                {
+                    "name": "CONSUL_PROXY",
+                    "value": "true"
+                },
+                {
+                    "name": "SERVICE_NAME",
+                    "value": "dashboard"
+                },
+                {
+                    "name": "SERVICE_PORT",
+                    "value": "9002"
+                },
+                {
+                    "name": "SERVICE_HEALTH_CHECK_PATH",
+                    "value": "/health"
+                },
+                {
+                    "name": "CONSUL_SERVICE_UPSTREAMS",
+                    "value": "[{\"destination_name\":\"counting\",\"local_bind_port\":9001}]"
+                }
+            ],
+            "secrets": [
+                {
+                    "valueFrom": "'${DASHBOARD_SECRET_ARN}'",
+                    "name": "CONSUL_HTTP_TOKEN"
+                }
+            ],
+            "memory": 100,
+            "image": "joatmon08/consul-ecs:v1.8.4-v1.14.4",
+            "name": "dashboard-sidecar"
+        }
+    ],
+    "taskRoleArn": "'${DASHBOARD_ROLE_ARN}'",
+    "family": "dashboard",
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "networkMode": "awsvpc"
+}

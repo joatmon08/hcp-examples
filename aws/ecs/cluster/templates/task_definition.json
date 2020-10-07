@@ -1,0 +1,78 @@
+[
+  {
+    "name": "consul-client",
+    "image": "${consul_image}",
+    "cpu": 10,
+    "memory": 100,
+    "volumesFrom": [],
+    "mountPoints": [],
+    "essential": true, 
+    "portMappings": [
+      {
+        "containerPort": 8301,
+        "hostPort": 8301,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 8301,
+        "hostPort": 8301,
+        "protocol": "udp"
+      },
+      {
+        "containerPort": 8302,
+        "hostPort": 8302
+      },
+      {
+        "containerPort": 8300,
+        "hostPort": 8300
+      },
+      {
+        "containerPort": 8600,
+        "hostPort": 8600,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 8600,
+        "hostPort": 8600,
+        "protocol": "udp"
+      },
+      {
+        "containerPort": 8501,
+        "hostPort": 8501
+      },
+      {
+        "containerPort": 8502,
+        "hostPort": 8502
+      }
+    ],
+    "secrets": [
+      {
+        "name": "CONSUL_HTTP_ADDR",
+        "valueFrom": "${arn_consul_secret}:retry_join::"
+      },
+      {
+        "name": "CONSUL_HTTP_TOKEN",
+        "valueFrom": "${arn_consul_secret}:token::"
+      },
+      {
+        "name": "CONSUL_CA_PEM",
+        "valueFrom": "${arn_consul_secret}:certificate::"
+      },
+      {
+        "name": "CONSUL_GOSSIP_ENCRYPT",
+        "valueFrom": "${arn_consul_secret}:encrypt_key::"
+      }
+    ],
+    "environment": [
+      {
+        "name": "CONSUL_CLIENT",
+        "value": "true"
+      }
+    ],
+    "command": [
+      "consul",
+      "agent",
+      "-config-dir=/consul/config"
+    ]
+  }
+]

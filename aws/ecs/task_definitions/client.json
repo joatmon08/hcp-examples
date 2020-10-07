@@ -1,0 +1,88 @@
+{
+  "executionRoleArn": "${CONSUL_CLIENT_ROLE_ARN}",
+  "containerDefinitions": [
+    {
+      "portMappings": [
+        {
+          "hostPort": 8301,
+          "protocol": "tcp",
+          "containerPort": 8301
+        },
+        {
+          "hostPort": 8301,
+          "protocol": "udp",
+          "containerPort": 8301
+        },
+        {
+          "hostPort": 8302,
+          "protocol": "tcp",
+          "containerPort": 8302
+        },
+        {
+          "hostPort": 8300,
+          "protocol": "tcp",
+          "containerPort": 8300
+        },
+        {
+          "hostPort": 8600,
+          "protocol": "tcp",
+          "containerPort": 8600
+        },
+        {
+          "hostPort": 8600,
+          "protocol": "udp",
+          "containerPort": 8600
+        },
+        {
+          "hostPort": 8501,
+          "protocol": "tcp",
+          "containerPort": 8501
+        },
+        {
+          "hostPort": 8502,
+          "protocol": "tcp",
+          "containerPort": 8502
+        }
+      ],
+      "command": [
+        "consul",
+        "agent",
+        "-config-dir=/consul/config"
+      ],
+      "cpu": 10,
+      "environment": [
+        {
+          "name": "CONSUL_CLIENT",
+          "value": "true"
+        }
+      ],
+      "secrets": [
+        {
+          "valueFrom": "${CONSUL_CLIENT_SECRET_ARN}:retry_join::",
+          "name": "CONSUL_HTTP_ADDR"
+        },
+        {
+          "valueFrom": "${CONSUL_CLIENT_SECRET_ARN}:token::",
+          "name": "CONSUL_HTTP_TOKEN"
+        },
+        {
+          "valueFrom": "${CONSUL_CLIENT_SECRET_ARN}:certificate::",
+          "name": "CONSUL_CA_PEM"
+        },
+        {
+          "valueFrom": "${CONSUL_CLIENT_SECRET_ARN}:encrypt_key::",
+          "name": "CONSUL_GOSSIP_ENCRYPT"
+        }
+      ],
+      "memory": 100,
+      "image": "joatmon08/consul-ecs:v1.8.4-v1.14.4",
+      "name": "consul-client"
+    }
+  ],
+  "taskRoleArn": "${CONSUL_CLIENT_ROLE_ARN}",
+  "family": "consul-client",
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "networkMode": "host"
+}
