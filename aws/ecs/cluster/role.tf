@@ -2,11 +2,11 @@ data "aws_kms_key" "secrets_manager" {
   key_id = "alias/${var.kms_key_alias}"
 }
 
-resource "aws_iam_policy" "ecs_secrets" {
+resource "aws_iam_policy" "consul_clients" {
   count       = var.deploy_consul_clients ? 1 : 0
-  name        = "${var.name}-ecs-secrets-policy"
+  name        = "${var.name}-consul-clients"
   path        = "/ecs/"
-  description = "Permissions for secrets"
+  description = "Permissions for secrets related to Consul clients"
 
   policy = <<EOF
 {
@@ -28,9 +28,9 @@ resource "aws_iam_policy" "ecs_secrets" {
 EOF
 }
 
-resource "aws_iam_role" "ecs_task" {
+resource "aws_iam_role" "consul_clients" {
   count = var.deploy_consul_clients ? 1 : 0
-  name  = "${var.name}-ecs-task-execution-role"
+  name  = "${var.name}-consul-clients"
   path  = "/ecs/"
 
   assume_role_policy = <<EOF
@@ -50,8 +50,8 @@ resource "aws_iam_role" "ecs_task" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_secrets" {
+resource "aws_iam_role_policy_attachment" "consul_clients" {
   count      = var.deploy_consul_clients ? 1 : 0
-  role       = aws_iam_role.ecs_task.0.id
-  policy_arn = aws_iam_policy.ecs_secrets.0.arn
+  role       = aws_iam_role.consul_clients.0.id
+  policy_arn = aws_iam_policy.consul_clients.0.arn
 }

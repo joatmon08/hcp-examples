@@ -353,11 +353,6 @@ $ echo '{
           "containerPort": 8502
         }
       ],
-      "command": [
-        "consul",
-        "agent",
-        "-config-dir=/consul/config"
-      ],
       "cpu": 10,
       "environment": [
         {
