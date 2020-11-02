@@ -3,7 +3,7 @@ resource "aws_ecs_task_definition" "consul" {
   family = "consul-client"
   container_definitions = templatefile("templates/task_definition.json", {
     consul_client_secret_arn = aws_secretsmanager_secret.hcp_consul.0.arn
-    consul_image             = "joatmon08/consul-ecs:v1.8.4-v1.14.4"
+    consul_image             = var.consul_ecs_image
   })
   requires_compatibilities = ["EC2"]
   task_role_arn            = aws_iam_role.consul_clients.0.arn

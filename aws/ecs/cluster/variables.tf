@@ -49,3 +49,7 @@ variable "tags" {
     source = "hcp-consul"
   }
 }
+
+variable "consul_ecs_image" {
+  default = "joatmon08/consul-ecs:v1.8.5-v1.14.5"
+}
