@@ -22,6 +22,8 @@ variable "enable_public_instances" {
   default = false
 }
 
+variable "role_arn" {}
+
 variable "hcp_consul_host" {}
 
 variable "hcp_consul_gossip_encrypt" {}
