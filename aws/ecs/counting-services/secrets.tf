@@ -13,5 +13,5 @@ resource "aws_secretsmanager_secret" "service" {
 resource "aws_secretsmanager_secret_version" "service" {
   for_each      = var.services
   secret_id     = aws_secretsmanager_secret.service[each.key].id
-  secret_string = jsonencode(each.value)
+  secret_string = each.value
 }
