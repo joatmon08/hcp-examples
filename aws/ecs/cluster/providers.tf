@@ -10,6 +10,9 @@ terraform {
     null = {
       version = "~> 2.1.2"
     }
+    kubernetes = {
+      version = "~> 1.13.3"
+    }
   }
   backend "remote" {}
 }
