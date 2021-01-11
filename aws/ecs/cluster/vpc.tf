@@ -14,10 +14,12 @@ module "vpc" {
   enable_dns_hostnames = false
 
   public_subnet_tags = {
-    key = "AmazonECSManaged"
+    key                                 = "AmazonECSManaged"
+    "kubernetes.io/cluster/${var.name}" = "shared"
   }
 
   private_subnet_tags = {
-    key = "AmazonECSManaged"
+    key                                 = "AmazonECSManaged"
+    "kubernetes.io/cluster/${var.name}" = "shared"
   }
 }
