@@ -2,19 +2,18 @@ terraform {
   required_version = "~>0.13"
   required_providers {
     aws = {
-      version = "~> 3.4.0"
+      version = "~> 3.23.0"
     }
     random = {
-      version = "~> 2.3.0"
+      version = "~> 3.0.0"
     }
     null = {
-      version = "~> 2.1.2"
+      version = "~> 3.0.0"
     }
     kubernetes = {
       version = "~> 1.13.3"
     }
   }
-  backend "remote" {}
 }
 
 provider "aws" {
