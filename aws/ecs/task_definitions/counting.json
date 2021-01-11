@@ -46,7 +46,7 @@
                 }
             ],
             "memory": 100,
-            "image": "joatmon08/consul-ecs:v1.8.4-v1.14.4",
+            "image": "joatmon08/consul-ecs:v1.9.1-v1.16.0",
             "name": "counting-sidecar"
         }
     ],

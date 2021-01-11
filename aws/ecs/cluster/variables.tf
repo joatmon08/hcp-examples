@@ -30,7 +30,7 @@ variable "hcp_consul_datacenter" {}
 
 variable "hcp_consul_client_acl_token" {}
 
-variable "hcp_consul_ca_pem_file_path" {}
+variable "hcp_consul_ca_pem" {}
 
 variable "peering_connection_has_been_added_to_hvn" {
   default = false
@@ -51,5 +51,5 @@ variable "tags" {
 }
 
 variable "consul_ecs_image" {
-  default = "joatmon08/consul-ecs:v1.8.5-v1.14.5"
+  default = "joatmon08/consul-ecs:v1.9.1-v1.16.0"
 }

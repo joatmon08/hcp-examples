@@ -16,7 +16,7 @@ resource "aws_secretsmanager_secret_version" "hcp_consul" {
   secret_id = aws_secretsmanager_secret.hcp_consul.0.id
   secret_string = jsonencode({
     retry_join  = var.hcp_consul_host
-    certificate = base64encode(file(var.hcp_consul_ca_pem_file_path))
+    certificate = var.hcp_consul_ca_pem
     token       = var.hcp_consul_client_acl_token
     encrypt_key = var.hcp_consul_gossip_encrypt
   })
