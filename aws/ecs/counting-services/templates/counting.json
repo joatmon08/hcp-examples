@@ -1,0 +1,50 @@
+[
+    {
+        "portMappings": [
+            {
+                "protocol": "tcp",
+                "containerPort": 9001
+            }
+        ],
+        "cpu": 10,
+        "memory": 300,
+        "image": "hashicorp/counting-service:0.0.2",
+        "name": "counting"
+    },
+    {
+        "portMappings": [
+            {
+                "protocol": "tcp",
+                "containerPort": 21000
+            }
+        ],
+        "cpu": 10,
+        "environment": [
+            {
+                "name": "CONSUL_PROXY",
+                "value": "true"
+            },
+            {
+                "name": "SERVICE_NAME",
+                "value": "counting"
+            },
+            {
+                "name": "SERVICE_PORT",
+                "value": "9001"
+            },
+            {
+                "name": "SERVICE_HEALTH_CHECK_PATH",
+                "value": "/health"
+            }
+        ],
+        "secrets": [
+            {
+                "valueFrom": "${secret_arn}",
+                "name": "CONSUL_HTTP_TOKEN"
+            }
+        ],
+        "memory": 100,
+        "image": "${consul_image}",
+        "name": "counting-sidecar"
+    }
+]

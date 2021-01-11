@@ -1,0 +1,62 @@
+[
+    {
+        "portMappings": [
+            {
+                "hostPort": 9002,
+                "protocol": "tcp",
+                "containerPort": 9002
+            }
+        ],
+        "cpu": 10,
+        "environment": [
+            {
+                "name": "COUNTING_SERVICE_URL",
+                "value": "http://localhost:9001"
+            }
+        ],
+        "memory": 300,
+        "image": "hashicorp/dashboard-service:0.0.4",
+        "name": "dashboard"
+    },
+    {
+        "portMappings": [
+            {
+                "hostPort": 21000,
+                "protocol": "tcp",
+                "containerPort": 21000
+            }
+        ],
+        "cpu": 10,
+        "environment": [
+            {
+                "name": "CONSUL_PROXY",
+                "value": "true"
+            },
+            {
+                "name": "SERVICE_NAME",
+                "value": "dashboard"
+            },
+            {
+                "name": "SERVICE_PORT",
+                "value": "9002"
+            },
+            {
+                "name": "SERVICE_HEALTH_CHECK_PATH",
+                "value": "/health"
+            },
+            {
+                "name": "CONSUL_SERVICE_UPSTREAMS",
+                "value": "[{\"destination_name\":\"counting\",\"local_bind_port\":9001}]"
+            }
+        ],
+        "secrets": [
+            {
+                "valueFrom": "${secret_arn}",
+                "name": "CONSUL_HTTP_TOKEN"
+            }
+        ],
+        "memory": 100,
+        "image": "${consul_image}",
+        "name": "dashboard-sidecar"
+    }
+]
