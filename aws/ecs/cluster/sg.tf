@@ -42,3 +42,13 @@ resource "aws_security_group_rule" "lan_gossip" {
   security_group_id        = aws_security_group.ecs.id
   description              = "Allow all TCP traffic between consul clients"
 }
+
+resource "aws_security_group_rule" "ingress_hcp" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "tcp"
+  cidr_blocks       = [var.hcp_consul_cidr_block]
+  security_group_id = module.eks.cluster_primary_security_group_id
+  description       = "Allow all TCP traffic between HCP and EKS"
+}
