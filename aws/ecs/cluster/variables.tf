@@ -1,9 +1,13 @@
 variable "name" {
   default = "ecs-to-hcp-consul"
+  type = string
+  description = "Name of the ECS cluster and infrastructure components"
 }
 
 variable "region" {
   default = "us-west-2"
+  type = string
+  description = "AWS region"
 }
 
 variable "ecs_cluster_size" {

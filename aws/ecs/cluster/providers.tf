@@ -10,9 +10,6 @@ terraform {
     null = {
       version = "~> 3.0.0"
     }
-    kubernetes = {
-      version = "~> 1.13.3"
-    }
   }
 }
 
