@@ -1,6 +1,14 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "localhost/providers/hcp" {
+  version     = "0.0.1"
+  constraints = "~> 0.0.1"
+  hashes = [
+    "h1:R9icKzI5TxVEwOFUgwK/6OPiT6OIVbvByhLZsn7h0K0=",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/aws" {
   version     = "3.23.0"
   constraints = ">= 2.41.0, >= 2.48.0, >= 2.68.0, >= 3.4.0, ~> 3.23.0"
