@@ -45,6 +45,10 @@
     "cpu": 10,
     "environment": [
       {
+        "name": "CONSUL_DATACENTER",
+        "value": "${consul_datacenter}"
+      },
+      {
         "name": "CONSUL_CLIENT",
         "value": "true"
       }

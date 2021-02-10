@@ -1,27 +1,44 @@
 variable "services" {
-  type = map(string)
+  type        = map(string)
+  description = "A list of services to deploy with their Consul ACL service identity token"
 }
 
-variable "role_arn" {}
-
 variable "region" {
-  default = "us-west-2"
+  type        = string
+  description = "AWS region"
+}
+
+variable "role_arn" {
+  type        = string
+  description = "AWS Role ARN to assume role"
 }
 
 variable "consul_ecs_image" {
-  default = "joatmon08/consul-ecs:v1.9.1-v1.16.0"
+  type        = string
+  default     = "joatmon08/consul-ecs:v1.9.3-v1.16.0"
+  description = "image to use in Consul proxy definitions"
 }
 
-variable "tfc_cluster_org" {}
-
-variable "tfc_cluster_workspace" {}
-
 variable "kms_key_alias" {
-  default = "aws/secretsmanager"
+  type        = string
+  default     = "aws/secretsmanager"
+  description = "KMS Key Alias for storing secrets in AWS secrets manager"
 }
 
 variable "tags" {
+  type = map(string)
   default = {
     source = "hcp-consul"
   }
+  description = "Tags to add to resources"
+}
+
+variable "tfc_cluster_org" {
+  type        = string
+  description = "TFC Organization for ECS Cluster"
+}
+
+variable "tfc_cluster_workspace" {
+  type        = string
+  description = "TFC Workspace for ECS Cluster"
 }

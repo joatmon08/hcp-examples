@@ -4,6 +4,7 @@ resource "aws_ecs_task_definition" "consul" {
   container_definitions = templatefile("templates/task_definition.json", {
     consul_client_secret_arn = aws_secretsmanager_secret.hcp_consul.0.arn
     consul_image             = var.consul_ecs_image
+    consul_datacenter        = local.datacenter
   })
   requires_compatibilities = ["EC2"]
   task_role_arn            = aws_iam_role.consul_clients.0.arn
